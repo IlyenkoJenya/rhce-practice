@@ -1,0 +1,25 @@
+---
+- name: task2
+  hosts: all
+  tasks:
+    - name: key
+      ansible.builtin.rpm_key:
+        state: present
+        key: /media/RPM-GPG-KEY-redhat-release
+    - name: baseos
+      ansible.builtin.yum_repository:
+        name: BaseOS
+        baseurl: file:///media/BaseOS/
+        description: Base OS Repo
+        gpgcheck: yes
+        gpgkey: file:///media/RPM-GPG-KEY-redhat-release
+        enabled: yes
+
+    - name: AppStream
+      ansible.builtin.yum_repository:
+        name: AppStream
+        baseurl: file:///media/AppStream/
+        description: AppStream Repo
+        gpgcheck: yes
+        gpgkey: file:///media/RPM-GPG-KEY-redhat-release
+        enabled: yes
